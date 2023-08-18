@@ -30,13 +30,16 @@ const Home = () => {
 const Container = styled.div`
   padding-top: 52px;
   max-width: 100%;
-`;
-
-const Content = styled.div`
-  max-width: 1128px;
+  max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
 `;
+
+// const Container = styled.div`
+//   max-width: 1128px;
+//   margin-left: auto;
+//   margin-right: auto;
+// `;
 
 const Section = styled.section`
   min-height: 50px;

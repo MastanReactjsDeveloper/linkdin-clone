@@ -1,32 +1,38 @@
 import React from 'react';
 import styled from "styled-components";
-
-const Login = () => {
-    return (
-        <Container>
-            <Nav>
-                <a href="/">
-                    <img src="/images/login-logo.svg" alt="" />
-                </a>
-                <div>
-                    <Join>Join now </Join>
-                    <Signin>Signin</Signin>
-                </div>
-            </Nav>
-            <Section>
-               <Hero>
-                <h1>wellcome to your professional community</h1>
-                <img src="/images/login-hero.svg" alt="" />
-               </Hero>
-               <Form>
-                <Google>
-                    <img src="/images/google.svg" alt="" />
-                    Signin with Google
-                </Google>
-               </Form>
-            </Section>
-        </Container>
-    );
+import { connect } from "react-redux";
+import { singInAPI } from "../actions";
+import { useNavigate } from 'react-router-dom';
+const Login = (props) => {
+  const navigate = useNavigate();
+  return (
+    <Container>
+      {
+        props.user && navigate("/home")
+      }
+      <Nav>
+        <a href="/">
+          <img src="/images/login-logo.svg" alt="" />
+        </a>
+        <div>
+          <Join>Join now </Join>
+          <Signin>Signin</Signin>
+        </div>
+      </Nav>
+      <Section>
+        <Hero>
+          <h1>wellcome to your professional community</h1>
+          <img src="/images/login-hero.svg" alt="" />
+        </Hero>
+        <Form>
+          <Google onClick={() => props.signIn()}>
+            <img src="/images/google.svg" alt="" />
+            Signin with Google
+          </Google>
+        </Form>
+      </Section>
+    </Container>
+  );
 };
 
 const Container = styled.div`
@@ -66,7 +72,7 @@ const Join = styled.a`
     border-radius:15px
   }`;
 
-const Signin=styled.a`
+const Signin = styled.a`
 box-shadow:inset 0 0 0 1px #0a66c2;
 color:#0a66c2;
 border-radius:24px;
@@ -166,5 +172,17 @@ const Google = styled.button`
     color: rgba(0, 0, 0, 0.75);
   }
 `;
+const mapStateToProps = (state) => {
+  return { 
+    user: state.setState.user,
+  }
+}
 
-export default Login;
+// const mapStateToProps=(dispatch)=>{
+//   return{}
+// }
+const mapDispatchToProps = (dispatch) => ({
+  signIn: () => dispatch(singInAPI())
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
+// export default Login;
