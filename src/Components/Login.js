@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { singInAPI } from "../actions";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 const Login = (props) => {
   const navigate = useNavigate();
   return (
@@ -173,18 +173,12 @@ const Google = styled.button`
   }
 `;
 const mapStateToProps = (state) => {
-  return { 
-  
-    user: state.setState,
-   
+  return {
+    user: state.user,
   }
 }
-
-// const mapStateToProps=(dispatch)=>{
-//   return{}
-// }
 const mapDispatchToProps = (dispatch) => ({
   signIn: () => dispatch(singInAPI())
 })
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 // export default Login;

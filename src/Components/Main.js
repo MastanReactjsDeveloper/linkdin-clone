@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from "styled-components"
+import PostModal from "./PostModal";
 
 const Main = (props) => {
     return <Container>
@@ -38,6 +39,7 @@ const Main = (props) => {
                 </button>
             </div>
         </ShareBox>
+      <div>
         <Article>
             <SharedActor>
                 <a >
@@ -98,6 +100,8 @@ const Main = (props) => {
             </button>
           </SocialActions>
         </Article>
+        </div>
+        <PostModal/>
     </Container>;
 };
 
