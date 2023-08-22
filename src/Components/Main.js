@@ -1,15 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components"
 import PostModal from "./PostModal";
 
 const Main = (props) => {
+    const [showModel, setShowModel] = useState("close");
+    const handleClick = (e) => {
+        e.preventDefault();
+        if (e.target !== e.currentTarget) {
+            return;
+        }
+        switch (showModel) {
+            case 'open':
+                setShowModel("close");
+                break;
+            case 'close':
+                setShowModel("open");
+                break;
+            default:
+                setShowModel("close");
+                break;
+        }
+    }
     return <Container>
 
         <ShareBox>
 
             <div>
                 <img src="/images/user.svg" alt="" />
-                <button>Start a post</button>
+                <button onClick={handleClick}>Start a post</button>
             </div>
             <div>
                 <button>
@@ -39,69 +57,69 @@ const Main = (props) => {
                 </button>
             </div>
         </ShareBox>
-      <div>
-        <Article>
-            <SharedActor>
-                <a >
-                    <img src="/images/user.svg" alt="" />
-                    <div>
-                        <span>title</span>
-                        <span>info</span>
-                        <span>Date</span>
-                    </div>
-                </a>
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-                    </svg>
-                </button>
-            </SharedActor>
-            <Discription>
-                Description
-            </Discription>
-            <SharedImg>
-                <a>
-                    <img src="/images/shareImage.jpg" alt="" />
-                </a>
-            </SharedImg>
-            <SocialCounts>
-                <li>
+        <div>
+            <Article>
+                <SharedActor>
+                    <a >
+                        <img src="/images/user.svg" alt="" />
+                        <div>
+                            <span>title</span>
+                            <span>info</span>
+                            <span>Date</span>
+                        </div>
+                    </a>
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                        </svg>
+                    </button>
+                </SharedActor>
+                <Discription>
+                    Description
+                </Discription>
+                <SharedImg>
+                    <a>
+                        <img src="/images/shareImage.jpg" alt="" />
+                    </a>
+                </SharedImg>
+                <SocialCounts>
+                    <li>
+                        <button>
+                            <img src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb" alt="" />
+                            <img src="https://static-exp1.licdn.com/sc/h/5thsbmikm6a8uov24ygwd914f" alt="" />
+                            <span>75</span>
+                        </button>
+                    </li>
+                    <li><a >2 commnets</a></li>
+                </SocialCounts>
+                <SocialActions>
                     <button>
                         <img src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb" alt="" />
-                        <img src="https://static-exp1.licdn.com/sc/h/5thsbmikm6a8uov24ygwd914f" alt="" />
-                    <span>75</span>
+                        <span>Like</span>
                     </button>
-                </li>
-                <li><a >2 commnets</a></li>
-            </SocialCounts>
-          <SocialActions>
-          <button>
-                <img src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb" alt="" />
-                <span>Like</span>
-            </button>
-            <button>
-                <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
-                    <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
-                    <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-                </svg>
-                <span>comments</span>
-            </button>
-            <button>
-                <svg style={{ color: "blue" }}  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
-                    <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
-                </svg>
-                <span>Share</span>
-            </button>
-            <button>
-                <svg style={{ color: "blue" }}  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
-                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
-                </svg>
-                <span>send</span>
-            </button>
-          </SocialActions>
-        </Article>
+                    <button>
+                        <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
+                            <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
+                            <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                        </svg>
+                        <span>comments</span>
+                    </button>
+                    <button>
+                        <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+                            <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
+                        </svg>
+                        <span>Share</span>
+                    </button>
+                    <button>
+                        <svg style={{ color: "blue" }} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                        </svg>
+                        <span>send</span>
+                    </button>
+                </SocialActions>
+            </Article>
         </div>
-        <PostModal/>
+        <PostModal showModel={showModel} handleClick={handleClick} />
     </Container>;
 };
 
@@ -268,7 +286,7 @@ li{
     }
 }
 `;
-const SocialActions=styled.div`
+const SocialActions = styled.div`
 align-items:center;
 display:flex;
 justify-content:flex-start;

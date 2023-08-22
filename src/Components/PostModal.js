@@ -1,39 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 
-const PostModal = () => {
+const PostModal = (props) => {
+    const [editorText, setEditor] = useState("");
+    const [shateImage, setShareImage] = useState("");
+
+    const hadleChange = (e) => {
+        const image = e.target.files[0];
+        if (image === "" || image === undefined) {
+            alert(`not an image,the profile is a ${typeof image}`);
+            return;
+
+        } setShareImage(image);
+    }
+    const reset = (e) => {
+        setEditor("");
+        props.handleClick(e)
+    }
     return (
-        <Container>
-            <Content>
-                <Header>
-                    <h2>
-                        Creating a post
-                    </h2>
-                    <button > <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                    </svg></button>
-                </Header>
-                <ShareContent>
-                    <UserInfo>
-                        <img src="/images/user.svg" alt="" />
-                        <span>name</span>
-                    </UserInfo>
-                </ShareContent>
-                <ShareCreation>
-                    <AttachAssets>
-                        <AssetButton>
-                          <img src="/images/image-upload.svg" alt="" />
-                        </AssetButton>
-                        <AssetButton>
-                           <img src="/images/video-Icon.svg" alt="" />
-                        </AssetButton>
-                        <AssetButton>
-                           <img src="/images/message-type.svg" alt="" />
-                        </AssetButton>
-                    </AttachAssets>
-                </ShareCreation>
-            </Content>
-        </Container>
+        <>
+            {props.showModel === "open" &&
+                <Container>
+                    <Content>
+                        <Header>
+                            <h2>
+                                Creating a post
+                            </h2>
+                            <button onClick={(event) => reset(event)} > <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg></button>
+                        </Header>
+                        <ShareContent>
+                            <UserInfo>
+                                <img src="/images/user.svg" alt="" />
+                                <span>name</span>
+                            </UserInfo>
+                            <Editor>
+
+                                <textarea value={editorText} onChange={(e) => setEditor(e.target.value)} placeholder="what do you want to talk about ?"
+                                ></textarea>
+                         upload
+                            </Editor>
+                        </ShareContent>
+                        <ShareCreation>
+                            <AttachAssets>
+                                <AssetButton>
+                                    <img src="/images/image-upload.svg" alt="" />
+                                </AssetButton>
+                                <AssetButton>
+                                    <img src="/images/video-Icon.svg" alt="" />
+                                </AssetButton>
+                                <ShareComment>
+                                    <AssetButton>
+                                        <img src="/images/message-type.svg" alt="" />
+                                        <span>anyone</span>
+                                    </AssetButton>
+                                </ShareComment>
+                                <PostButton disabled={!editorText ? true : false}>
+                                    Post
+                                </PostButton>
+                            </AttachAssets>
+                        </ShareCreation>
+                    </Content>
+                </Container>
+            } </>
     )
 }
 const Container = styled.div`
@@ -45,6 +75,7 @@ bottom: 0;
 z-index:9999;
 color:black;
 background-color:rgba(0,0,0,0.8);
+animation:fadeIn 0.60s;
 `;
 
 const Content = styled.div`
@@ -78,9 +109,9 @@ margin-top:-10px;
  height: 40px;
  width:40px;
  min-width:auto;
+ cursor:pointer;
  color:rgba(0,0,0,0.15)
- svg{
-    
+ svg,img{
     pointer-events:none;
  }
 }
@@ -141,7 +172,52 @@ width: 40px;
 min-width:auto;
 /* color:rgba(0,0,0,0.5); */
 background-color:rgba(0,0,0,0.2);
-margin-left:5px;
+margin-left:10px;
+`;
+
+const ShareComment = styled.div`
+padding-left:10px;
+margin-right:auto;
+border-left:2px solid rgba(0,0,0,0.15);
+/* background-color:rgba(0,0,0,0.2); */
+$(AssetButton){
+    svg{
+        margin-right:5px
+    }
+}
+`;
+
+const PostButton = styled.div`
+min-width:60px;
+margin-left:250px;
+border-radius:30%;
+padding-left:18px;
+width:30px;
+height: 30px;
+padding-top:15px;
+background:${(props) => (props.disabled ? "rgba(0,0,0,0.6)" : "blue")};
+color:${(props) => (props.disabled ? "rgba(1,1,1,0.2)" : "white")};
+&:hover{
+   cursor:pointer;
+   background:${(props) => props.disabled ? "rgba(0,0,0,0.08)" : "#004182"};
+   
+}
+`;
+
+const Editor = styled.div`
+padding:10px  24px;
+textarea{
+    width:100%;
+    min-height:100px;
+    resize:none;
+}
+input{
+    width:100%;
+    height:35px;
+    font-size:16px;
+    margin-bottom:20px;
+
+}
 `;
 
 export default PostModal
