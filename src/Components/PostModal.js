@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-
+import ReactPlayer from "react-player"
+import { connect } from 'react-redux';
 const PostModal = (props) => {
     const [editorText, setEditor] = useState("");
-    const [shateImage, setShareImage] = useState("");
-
+    const [shareImage, setShareImage] = useState("");
+    const [videoLink, setVideoLink] = useState("");
+    const [assetArea, setAssetArea] = useState("");
     const hadleChange = (e) => {
         const image = e.target.files[0];
         if (image === "" || image === undefined) {
@@ -13,8 +15,20 @@ const PostModal = (props) => {
 
         } setShareImage(image);
     }
+
+    const switchAssetArea = (area) => {
+        setShareImage("");
+        setVideoLink("");
+        setAssetArea(area);
+
+    }
+
+
     const reset = (e) => {
         setEditor("");
+        setShareImage("")
+        setVideoLink("");
+        setAssetArea("")
         props.handleClick(e)
     }
     return (
@@ -32,22 +46,47 @@ const PostModal = (props) => {
                         </Header>
                         <ShareContent>
                             <UserInfo>
-                                <img src="/images/user.svg" alt="" />
-                                <span>name</span>
+                                {props.user.photoURL ? (<img src={props.user.photoURL} />) :
+                                    (<img src="/images/user.svg" alt="" />)}
+                                <span>{props.user.displayName}</span>
                             </UserInfo>
                             <Editor>
 
                                 <textarea value={editorText} onChange={(e) => setEditor(e.target.value)} placeholder="what do you want to talk about ?"
                                 ></textarea>
-                         upload
+                                {
+                                    assetArea === "image" ? (
+
+                                        <UploadImage>
+                                            <input type='file' accept='image/gif,image/jpeg,image/png' name='image'
+                                                id="file"
+                                                style={{ display: "none" }}
+                                                onChange={hadleChange}
+                                            />
+                                            <p>
+                                                <label htmlFor="file"
+
+                                                >select an image to share
+
+                                                </label>
+                                            </p>
+                                            {shareImage && <img src={URL.createObjectURL(shareImage)} />}
+                                        </UploadImage>
+                                    ) : assetArea === "media" && (
+                                        <>
+                                            <input type="text" placeholder='please input a video link' value={videoLink} onChange={(e) => setVideoLink(e.target.value)} />
+                                            {
+                                                videoLink && (<ReactPlayer width={"100%"} url={videoLink} />)
+                                            }
+                                        </>)}
                             </Editor>
                         </ShareContent>
                         <ShareCreation>
                             <AttachAssets>
-                                <AssetButton>
+                                <AssetButton onClick={() => switchAssetArea("image")}>
                                     <img src="/images/image-upload.svg" alt="" />
                                 </AssetButton>
-                                <AssetButton>
+                                <AssetButton onClick={() => switchAssetArea("media")}>
                                     <img src="/images/video-Icon.svg" alt="" />
                                 </AssetButton>
                                 <ShareComment>
@@ -220,4 +259,20 @@ input{
 }
 `;
 
-export default PostModal
+const UploadImage = styled.div`
+text-align:center;
+img{
+    width: 100%;
+    height: 100px;
+}
+`;
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+
+}
+export default connect(mapStateToProps, mapDispatchToProps)(PostModal)

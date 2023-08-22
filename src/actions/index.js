@@ -1,4 +1,5 @@
-import { auth, provider } from "../firebase.js";
+import { upload } from "@testing-library/user-event/dist/upload.js";
+import { auth, provider, storage } from "../firebase.js";
 import { SET_USER } from "./actionType.js";
 
 export const setUser = (payload) => ({
@@ -35,3 +36,18 @@ export function signOutAPI() {
         })
     }
 }
+
+export function postArticleAPI(payload){
+    return (dispatch)=>{
+        if(payload.image !== ""){
+            return upload=storage.ref(`images/${payload.image.name}`)
+            .put(provider.image)
+        }
+        upload.on('state_change',(snapshot)=>
+        {
+            const progress= (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+            });
+            console.log(`progress :${progress}%`)
+        }
+    }
+    
